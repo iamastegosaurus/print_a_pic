@@ -1,12 +1,12 @@
 import bpy
 import random
+import math
 
-h = 30
-w = 30
+h = 10
+w = 10
 
 for x in range(w):
     for y in range(h):
-        z = random.random() * 3
-        bpy.ops.mesh.primitive_cube_add(size=1, enter_editmode=False, location=(x, y, z))
-        print(x, y)
+        z = math.sqrt(x*y)
+        bpy.ops.surface.primitive_nurbs_surface_surface_add(radius=1, enter_editmode=False, location=(x, y, z))
 
