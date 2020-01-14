@@ -8,7 +8,7 @@ import collections
 import time
 start = time.time()
 
-img = cv2.imread('Q:\\print_a_pic\\images\\down.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\tree.jpg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 edge = cv2.Canny(img, 200, 200)
