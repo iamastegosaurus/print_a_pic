@@ -8,7 +8,7 @@ import collections
 import time
 start = time.time()
 
-img = cv2.imread('Q:\\print_a_pic\\images\\tree.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\sunflower.jpg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 edge = cv2.Canny(img, 200, 200)
@@ -85,7 +85,8 @@ def add_edges():
 
 add_edges()
 for pt in range(len(z)):
-    z[pt] = math.sqrt(z[pt]) # * 255 / layers
+    # z[pt] = z[pt] * 255 / layers # TO DISPLAY
+    z[pt] = z[pt] # * 255 / layers # SCALE DOWN FOR RENDER
 
 print("edges added " + str(time.time() - start))
 
@@ -96,35 +97,34 @@ for j in range(h):
         new[j][i] = z[p]
         p += 1
 
-kernel = np.ones((5,5), np.float32) / 25
+kernel = np.ones((5, 5), np.float32) / 25
 blur = cv2.filter2D(new, -1, kernel)
 
 # cv2.imwrite(''Q:\\print_a_pic\\rend\\img.jpg', new)
 
 print("blurred and finished. total time: " + str(time.time() - start))
 
-# cv2.imshow('new', new)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
+cv2.imshow('new', new)
+cv2.imshow('blur', blur)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 
 # USE TO SAVE
-# x = []
-# y = []
-# z = []
+x = []
+y = []
+z = []
 
-# for i in range(w):
-#     for j in range(h):
-#         x.append(i)
-#         y.append(j)
-#         z.append(new[j, i])
+for i in range(w):
+    for j in range(h):
+        x.append(i)
+        y.append(j)
+        z.append(blur[j, i])
 
+save = pd.DataFrame({
+    'x': x,
+    'y': y,
+    'z': z
+})
 
-
-# save = pd.DataFrame({
-#     'x': x,
-#     'y': y,
-#     'z': z
-# })
-
-# save.to_csv('Q:\\print_a_pic\\rend\\data.csv', index=False, header=False)
+save.to_csv('Q:\\print_a_pic\\rend2\\data.csv', index=False, header=False)
