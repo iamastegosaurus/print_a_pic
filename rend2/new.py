@@ -2,6 +2,9 @@ import bpy
 import csv
 
 vertsData = []
+x = []
+y = []
+z = []
 
 with open('Q:\\print_a_pic\\rend2\\data.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
@@ -9,10 +12,13 @@ with open('Q:\\print_a_pic\\rend2\\data.csv') as csvfile:
         a = float(row[0])
         b = float(row[1])
         c = float(row[2])
+        x.append(a)
+        y.append(b)
+        z.append(c)
         vertsData.append([a, b, c])
 
-w = 400
-h = 400
+w = int(max(x) + 1)
+h = int(max(y) + 1)
 n = h*w
 facesData = []
 

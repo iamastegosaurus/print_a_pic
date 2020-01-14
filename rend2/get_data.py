@@ -8,13 +8,17 @@ import collections
 import time
 start = time.time()
 
-img = cv2.imread('Q:\\print_a_pic\\images\\sunflower.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\tree.jpg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 edge = cv2.Canny(img, 200, 200)
 h, w, _ = img.shape
-layers = 9
+
+# PARAMS
+layers = 7
 heightMod = 1.2
+resize = True
+scale_percent = .5
 
 bgrpx = img.reshape(h*w, 3)
 hsvpx = hsv.reshape(h*w, 3)
@@ -105,22 +109,29 @@ blur = cv2.filter2D(new, -1, kernel)
 
 print("blurred and finished. total time: " + str(time.time() - start))
 
-cv2.imshow('new', new)
-cv2.imshow('blur', blur)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
 
+if resize == True:
+ 
+    w_down = int(w * scale_percent)
+    h_down = int(h * scale_percent)
+    down = cv2.resize(blur, (w_down, h_down), interpolation = cv2.INTER_AREA)
+
+# cv2.imshow('new', new)
+# cv2.imshow('blur', blur)
+# cv2.imshow('down', down)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
 
 # USE TO SAVE
 x = []
 y = []
 z = []
 
-for i in range(w):
-    for j in range(h):
+for i in range(w_down):
+    for j in range(h_down):
         x.append(i)
         y.append(j)
-        z.append(blur[j, i])
+        z.append(down[j, i])
 
 save = pd.DataFrame({
     'x': x,
