@@ -13,7 +13,8 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 edge = cv2.Canny(img, 200, 200)
 h, w, _ = img.shape
-layers = 7
+layers = 9
+heightMod = 1.2
 
 bgrpx = img.reshape(h*w, 3)
 hsvpx = hsv.reshape(h*w, 3)
@@ -86,7 +87,7 @@ def add_edges():
 add_edges()
 for pt in range(len(z)):
     # z[pt] = z[pt] * 255 / layers # TO DISPLAY
-    z[pt] = z[pt] # * 255 / layers # SCALE DOWN FOR RENDER
+    z[pt] = z[pt] * heightMod # * 255 / layers # SCALE DOWN FOR RENDER
 
 print("edges added " + str(time.time() - start))
 

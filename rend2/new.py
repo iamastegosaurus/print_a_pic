@@ -26,8 +26,6 @@ def get_faces():
             facesData.append( (a,b,c,d) )
 
 get_faces()
-# vertsData =[(1,-1,-1),(1,-1,1),(-1,-1,1),(-1,-1,-1),(1,1,-1),(1,1,1),(-1,1,1),(-1,1,-1)]
-# facesData = [ (0, 399, 159400, 159201) ]# [(0,1,2,3),(4,7,6,5),(1,5,6,2),(2,6,7,3),(4,0,3,7)]
 
 mesh = bpy.data.meshes.new("myMesh_mesh")
 mesh.from_pydata(vertsData, [], facesData) # verts, edges, faces
