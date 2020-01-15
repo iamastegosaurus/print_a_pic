@@ -1,30 +1,52 @@
-import pandas as pd
 import cv2
-import numpy as np
 from sklearn.cluster import KMeans
+import pandas as pd
+import numpy as np
 import math
 import collections
 
 import time
 start = time.time()
 
-img = cv2.imread('Q:\\print_a_pic\\rend\\images\\down.jpg')
+# PARAMS
+
+img = cv2.imread('Q:\\print_a_pic\\images\\tree.jpg')
+h, w, _ = img.shape
+
+hsv_bool = False
+layers = 4
+heightMod = 1.3
+resize = False
+max_px = 1000000
+
+if h * w > max_px:
+    resize = True
+    scale_percent = max_px / (h * w)
+
+if resize == True:
+ 
+    w_down = int(w * scale_percent)
+    h_down = int(h * scale_percent)
+    img = cv2.resize(img, (w_down, h_down), interpolation = cv2.INTER_AREA)
+    w, h = w_down, h_down
+    print('new dim: ' + str(w) + ', ' + str(h))
+
+
+if hsv_bool == True:
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 edge = cv2.Canny(img, 200, 200)
 h, w, _ = img.shape
-layers = 7
 
-bgrpx = img.reshape(h*w, 3)
-hsvpx = hsv.reshape(h*w, 3)
+px_info = img.reshape(h*w, 3)
 
 df = pd.DataFrame({
-    'f1': bgrpx[0:, 0],
-    'f2': bgrpx[0:, 1],
-    'f3': bgrpx[0:, 2]
+    'f1': px_info[0:, 0],
+    'f2': px_info[0:, 1],
+    'f3': px_info[0:, 2]
 })
 
-print("imports and data loaded " + str(time.time() - start))
+print("starting clust " + str(time.time() - start))
 
 kmeans = KMeans(n_clusters = layers)
 kmeans.fit(df)
@@ -49,7 +71,6 @@ def distances():
                 count[t] += 1
     return meep/count
 
-
 d = {}
 avg = distances()
 for t in range(len(avg)):
@@ -65,29 +86,21 @@ def flipflop():
                 z[p] = t
                 break
 
-print("starting flipflop " + str(time.time() - start))
-
 flipflop()
 
-print("flipflop complete " + str(time.time() - start))
+print("flipflopped " + str(time.time() - start))
 
 edgeValues = edge.reshape(h*w, 1)
 
 def add_edges():
     for t in range(len(z)):
         if edgeValues[t] == 255:
-            z[t] += .5
-
-            # if z[t] <= layers / 2:
-            #     z[t] = layers
-            # else:
-            #     z[t] = 0
+            z[t] += 10
 
 add_edges()
 for pt in range(len(z)):
-    z[pt] = math.sqrt(z[pt]) # * 255 / layers
-
-print("edges added " + str(time.time() - start))
+    # z[pt] = z[pt] * 255 / layers # TO DISPLAY
+    z[pt] = z[pt] * heightMod
 
 new = gray.copy()
 p = 0
@@ -96,28 +109,20 @@ for j in range(h):
         new[j][i] = z[p]
         p += 1
 
-kernel = np.ones((5,5), np.float32) / 25
+kernel = np.ones((5, 5), np.float32) / 25
 blur = cv2.filter2D(new, -1, kernel)
 
-# cv2.imwrite(''Q:\\print_a_pic\\rend\\img.jpg', new)
-
-print("blurred and finished. total time: " + str(time.time() - start))
-
-# cv2.imshow('new', new)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
+print("edges and blur. total time:  " + str(time.time() - start))
 
 x = []
 y = []
 z = []
 
-for i in range(w):
-    for j in range(h):
+for j in range(h):
+    for i in range(w):
         x.append(i)
         y.append(j)
-        z.append(new[j, i])
-
-
+        z.append(blur[j, i])
 
 save = pd.DataFrame({
     'x': x,
@@ -125,4 +130,9 @@ save = pd.DataFrame({
     'z': z
 })
 
-save.to_csv('Q:\\print_a_pic\\rend\\data.csv', index=False, header=False)
+save.to_csv('Q:\\print_a_pic\\rend2\\data.csv', index=False, header=False)
+
+cv2.imshow('new', new)
+cv2.imshow('blur', blur)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
