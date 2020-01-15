@@ -5,7 +5,7 @@ vertsData = []
 w = 0
 h = 0
 
-with open('Q:\\print_a_pic\\rend2\\data.csv') as csvfile:
+with open('Q:\\print_a_pic\\rend\\data.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
     for row in readCSV:
         a = float(row[0])

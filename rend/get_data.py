@@ -8,16 +8,15 @@ import collections
 import time
 start = time.time()
 
-# PARAMS
-
-img = cv2.imread('Q:\\print_a_pic\\images\\tree.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\bubbles.jpg')
 h, w, _ = img.shape
 
+# PARAMS
 hsv_bool = False
-layers = 4
-heightMod = 1.3
+layers = 8
+heightMod = 1.5
 resize = False
-max_px = 1000000
+max_px = 500000
 
 if h * w > max_px:
     resize = True
@@ -130,7 +129,7 @@ save = pd.DataFrame({
     'z': z
 })
 
-save.to_csv('Q:\\print_a_pic\\rend2\\data.csv', index=False, header=False)
+save.to_csv('Q:\\print_a_pic\\rend\\data.csv', index=False, header=False)
 
 cv2.imshow('new', new)
 cv2.imshow('blur', blur)
