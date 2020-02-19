@@ -25,6 +25,7 @@ facesData = []
 def get_faces():
     for yy in range( h-1 ):
         for xx in range( w-1 ):
+
             a = (xx) + (yy*w)
             b = (xx + 1) + (yy*w)
             c = (xx + 1) + ((yy+1) * w)
