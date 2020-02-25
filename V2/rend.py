@@ -46,7 +46,6 @@ new_object = bpy.data.objects.new("myMesh_object", mesh)
 new_object.data = mesh
 bpy.context.collection.objects.link(new_object)
 
-
 bpy.data.objects["myMesh_object"].select_set(True)
 bpy.context.view_layer.objects.active = bpy.data.objects["myMesh_object"]
 
@@ -54,8 +53,7 @@ bpy.ops.object.mode_set(mode='EDIT')
 bpy.ops.mesh.select_mode( type  = 'FACE'   )
 bpy.ops.mesh.select_all( action = 'SELECT' )
 
-bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value":(0, 0, 8)})
-
+bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value":(0, 0, 6)})
 bpy.ops.transform.resize(value=(1, 1, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
 bpy.ops.object.mode_set( mode = 'OBJECT' )
@@ -76,9 +74,7 @@ bpy.ops.object.modifier_add(type='SIMPLE_DEFORM')
 bpy.context.object.modifiers["SimpleDeform"].deform_method = 'BEND'
 bpy.context.object.modifiers["SimpleDeform"].origin = bpy.data.objects["Empty"]
 
-
-
 bpy.context.object.modifiers["SimpleDeform"].angle = -55 * deg_rad
-
 bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
 
+bpy.ops.transform.resize(value=(1.2, 1, 1), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
