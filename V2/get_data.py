@@ -7,7 +7,7 @@ img = cv2.imread('Q:\\print_a_pic\\images\\sunflower.jpg')
 h, w, _ = img.shape
 
 # PARAMS
-max_px = 500000
+max_px = 600000
 
 if h * w > max_px:
 

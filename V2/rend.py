@@ -18,6 +18,12 @@ with open('Q:\\print_a_pic\\V2\\data.csv') as csvfile:
             h = b + 1
 
 w, h = int(w), int(h)
+print(w,h)
+for pt in range(len(vertsData)):
+    # print(vertsData[pt])
+    vertsData[pt][0] -= int(w/2)
+    vertsData[pt][1] -= int(h/2)
+
 facesData = []
 
 def get_faces():
@@ -41,5 +47,37 @@ new_object.data = mesh
 bpy.context.collection.objects.link(new_object)
 
 
-# bpy.ops.object.editmode_toggle()
-# bpy.ops.mesh.extrude_region_move(MESH_OT_extrude_region={"use_normal_flip":False, "mirror":False}, TRANSFORM_OT_translate={"value":(0, -1.16415e-10, 10), "orient_type":'NORMAL', "orient_matrix":((0.688784, 0.724966, 0.000462525), (-0.724966, 0.688784, 7.90223e-05), (-0.000261292, -0.000389745, 1)), "orient_matrix_type":'NORMAL', "constraint_axis":(False, False, True), "mirror":False, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "release_confirm":False, "use_accurate":False})
+bpy.data.objects["myMesh_object"].select_set(True)
+bpy.context.view_layer.objects.active = bpy.data.objects["myMesh_object"]
+
+bpy.ops.object.mode_set(mode='EDIT')
+bpy.ops.mesh.select_mode( type  = 'FACE'   )
+bpy.ops.mesh.select_all( action = 'SELECT' )
+
+bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value":(0, 0, 8)})
+
+bpy.ops.transform.resize(value=(1, 1, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+bpy.ops.object.mode_set( mode = 'OBJECT' )
+
+bpy.ops.object.empty_add(type='PLAIN_AXES', location=(0, 0, 0))
+bpy.ops.transform.translate(value=(0, 0, -w/5), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+bpy.ops.transform.rotate(value=0.648248, orient_axis='Z', orient_type='VIEW', orient_matrix=((-0.0482991, 0.998833, 0.000163085), (0.0376667, 0.00165826, 0.999289), (-0.998123, -0.0482709, 0.0377029)), orient_matrix_type='VIEW', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+bpy.data.objects["myMesh_object"].select_set(True)
+bpy.context.view_layer.objects.active = bpy.data.objects["myMesh_object"]
+bpy.ops.object.modifier_add(type='SIMPLE_DEFORM')
+bpy.context.object.modifiers["SimpleDeform"].deform_method = 'BEND'
+bpy.context.object.modifiers["SimpleDeform"].origin = bpy.data.objects["Empty"]
+
+
+bpy.ops.transform.rotate(value=-14.1411, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+bpy.ops.transform.rotate(value=-0.54146, orient_axis='Y', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+
+# bpy.context.object.modifiers["SimpleDeform"].angle = 1.57
+
+
+bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
+
+
