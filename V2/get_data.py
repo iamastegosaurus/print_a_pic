@@ -3,11 +3,11 @@ import pandas as pd
 import numpy as np
 import math
 
-img = cv2.imread('Q:\\print_a_pic\\images\\bae.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\babyod.jpg')
 h, w, _ = img.shape
 
 # PARAMS
-max_px = 600000
+max_px = 400000
 
 if h * w > max_px:
 
@@ -19,7 +19,7 @@ if h * w > max_px:
     # print('new dim: ' + str(w) + ', ' + str(h))
 
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
+# print(w,h)
 x, y, z = [], [], []
 
 for j in range(h):
