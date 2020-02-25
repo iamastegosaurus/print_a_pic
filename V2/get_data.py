@@ -20,6 +20,7 @@ if h * w > max_px:
 
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # print(w,h)
+# cv2.imwrite('Q:\\print_a_pic\\color\\resized.jpg', img)
 x, y, z = [], [], []
 
 for j in range(h):
