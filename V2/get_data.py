@@ -26,7 +26,7 @@ for j in range(h):
     for i in range(w):
         x.append(i)
         y.append(j)
-        z.append( img[j, i]**0.5 )
+        z.append( img[j, i]**0.4 )
 
 save = pd.DataFrame({
     'x': x,
