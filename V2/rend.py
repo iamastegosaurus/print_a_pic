@@ -78,3 +78,6 @@ bpy.context.object.modifiers["SimpleDeform"].angle = -55 * deg_rad
 bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
 
 bpy.ops.transform.resize(value=(1.2, 1, 1), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+
+# bpy.ops.export_mesh.ply('Q:\\print_a_pic\\V2\\export.stl')

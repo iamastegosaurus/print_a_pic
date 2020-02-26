@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import math
 
-img = cv2.imread('Q:\\print_a_pic\\images\\babyod.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\dock.jpeg')
 h, w, _ = img.shape
 
 # PARAMS
