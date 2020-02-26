@@ -2,9 +2,15 @@ import bpy
 import csv
 import os
 
+curve = 'arc' # 'cylinder'
+
 vertsData = []
 w = 0
 h = 0
+
+# if within blender
+# path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 path = os.path.dirname(os.path.abspath(__file__))
 
 with open(path + '\\data.csv') as csvfile:
@@ -74,13 +80,12 @@ bpy.ops.object.modifier_add(type='SIMPLE_DEFORM')
 bpy.context.object.modifiers["SimpleDeform"].deform_method = 'BEND'
 bpy.context.object.modifiers["SimpleDeform"].origin = bpy.data.objects["Empty"]
 
-bpy.context.object.modifiers["SimpleDeform"].angle = -55 * deg_rad
+if curve == 'arc':
+    bpy.context.object.modifiers["SimpleDeform"].angle = -55 * deg_rad
+elif curve == 'cylinder':
+    bpy.context.object.modifiers["SimpleDeform"].angle = -360 * deg_rad
 bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
 
 bpy.ops.transform.resize(value=(1.2, 1, 1), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
-
-# blend_file_path = bpy.data.filepath
-# directory = os.path.dirname(blend_file_path)
-# target_file = os.path.join(directory, 'myfile.obj')
 
 bpy.ops.export_scene.obj(filepath = path + '\\myfile.obj')

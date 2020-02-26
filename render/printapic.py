@@ -4,12 +4,12 @@ import numpy as np
 import math
 import os
 
-img = cv2.imread('Q:\\print_a_pic\\images\\babyod.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\sunflower.jpg')
 h, w, _ = img.shape
 path = os.path.dirname(os.path.abspath(__file__))
 
 # PARAMS
-max_px = 400000
+max_px = 300000
 
 if h * w > max_px:
 
@@ -21,7 +21,7 @@ if h * w > max_px:
     # print('new dim: ' + str(w) + ', ' + str(h))
 
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-# print(w,h)
+print(w,h)
 # cv2.imwrite('Q:\\print_a_pic\\color\\resized.jpg', img)
 x, y, z = [], [], []
 
@@ -36,8 +36,6 @@ save = pd.DataFrame({
     'y': y,
     'z': z
 })
-
-print(path)
 
 save.to_csv(path + '\\data.csv', index=False, header=False)
 
