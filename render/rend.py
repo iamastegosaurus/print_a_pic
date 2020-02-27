@@ -88,4 +88,7 @@ bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
 
 bpy.ops.transform.resize(value=(1.2, 1, 1), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
-bpy.ops.export_scene.obj(filepath = path + '\\myfile.obj')
+# bpy.ops.object.select_all(action='DESELECT')
+# bpy.data.objects["myMesh_object"].select_set(True)
+# bpy.context.view_layer.objects.active = bpy.data.objects["myMesh_object"]
+bpy.ops.export_mesh.stl(filepath = path + '\\myfile.stl')
