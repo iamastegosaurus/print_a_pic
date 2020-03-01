@@ -6,10 +6,10 @@ vertsData = []
 w = 0
 h = 0
 
-# if within blender
-path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+path = os.path.dirname(os.path.abspath(__file__))
 
-# path = os.path.dirname(os.path.abspath(__file__))
+# if within blender uncomment below
+path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 with open(path + '\\data.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
@@ -20,7 +20,6 @@ with open(path + '\\data.csv') as csvfile:
         vertsData.append([a, b, c])
 
 w, h = int(a+1), int(b+1)
-# print(w,h)
 
 for pt in range(len(vertsData)):
     vertsData[pt][0] -= int(w/2)
@@ -54,7 +53,7 @@ bpy.ops.object.mode_set(mode='EDIT')
 bpy.ops.mesh.select_mode( type  = 'FACE'   )
 bpy.ops.mesh.select_all( action = 'SELECT' )
 
-bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value":(0, 0, 10)}) 
+bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value":(0, 0, 9)}) 
 bpy.ops.transform.resize(value=(1, 1, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
 bpy.ops.object.mode_set( mode = 'OBJECT' )
@@ -71,14 +70,14 @@ bpy.ops.object.modifier_add(type='SIMPLE_DEFORM')
 bpy.context.object.modifiers["SimpleDeform"].deform_method = 'BEND'
 bpy.context.object.modifiers["SimpleDeform"].origin = bpy.data.objects["Empty"]
 
-bpy.context.object.modifiers["SimpleDeform"].angle = -55 * deg_rad
+bpy.context.object.modifiers["SimpleDeform"].angle = -45 * deg_rad
 bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
 
 scale = 0.15
-# bpy.ops.transform.resize(value=(scale, scale, scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+bpy.ops.transform.resize(value=(scale, scale, scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 bpy.ops.transform.rotate(value= -90*deg_rad, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
-bpy.ops.object.select_all( action = 'DESELECT' )
-bpy.data.objects["myMesh_object"].select_set(True)
+# bpy.ops.object.select_all( action = 'DESELECT' )
+# bpy.data.objects["myMesh_object"].select_set(True)
 
 bpy.ops.export_mesh.stl(filepath = path + '\\myfile.stl')

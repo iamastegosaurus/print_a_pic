@@ -8,7 +8,6 @@ img = cv2.imread('Q:\\print_a_pic\\images\\bubbles.jpg')
 h, w, _ = img.shape
 path = os.path.dirname(os.path.abspath(__file__))
 
-# PARAMS
 max_px = 200000
 
 if h * w > max_px:
@@ -20,7 +19,6 @@ if h * w > max_px:
     w, h = w_down, h_down
 
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-# cv2.imwrite('Q:\\print_a_pic\\color\\resized.jpg', img)
 x, y, z = [], [], []
 
 for j in range(h):
