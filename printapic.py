@@ -4,7 +4,7 @@ import numpy as np
 import math
 import os
 
-img = cv2.imread('Q:\\print_a_pic\\images\\boobles.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\panorama.jpg')
 h, w, _ = img.shape
 path = os.path.dirname(os.path.abspath(__file__))
 
@@ -39,4 +39,4 @@ save.to_csv(path + '\\data.csv', index=False, header=False)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
-os.system("blender --background --python " + path + "\\rend.py")
+# os.system("blender --background --python " + path + "\\rend.py")
