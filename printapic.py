@@ -4,7 +4,7 @@ import numpy as np
 import math
 import os
 
-img = cv2.imread('Q:\\print_a_pic\\images\\panorama.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\tree.jpg')
 h, w, _ = img.shape
 path = os.path.dirname(os.path.abspath(__file__))
 
