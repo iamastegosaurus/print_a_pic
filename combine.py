@@ -25,7 +25,6 @@ for j in range(h):
     for i in range(w):
         vertsData.append([i - w/2, j - h/2, img[j,i]**.3])
 
-
 facesData = []
 
 def get_faces():
@@ -78,12 +77,11 @@ bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
 # bpy.context.object.modifiers["SimpleDeform"].angle = 6.28319
 # bpy.ops.transform.rotate(value=3.14159, orient_axis='Z', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
-
 scale = 0.15
-# bpy.ops.transform.resize(value=(scale, scale, scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+bpy.ops.transform.resize(value=(scale, scale, scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 bpy.ops.transform.rotate(value= -90*deg_rad, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
 # bpy.ops.object.select_all( action = 'DESELECT' )
-# bpy.data.objects["myMesh_object"].select_set(True)
+# bpy.data.meshes["myMesh_mesh"].select_set(True)
 
 bpy.ops.export_mesh.stl(filepath = path + '\\myfile.stl')
