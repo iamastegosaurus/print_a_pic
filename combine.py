@@ -3,12 +3,18 @@ import bpy
 import numpy as np
 import math
 import os
+import time
 
 img = cv2.imread('Q:\\print_a_pic\\images\\arches.jpg')
 h, w, _ = img.shape
 path = os.path.dirname(os.path.abspath(__file__))
 
-max_px = 200000
+max_px = 200000 # 200,000 standard - too high?
+scale = 0.15
+extrude_amt = 9
+thick_mod = 50
+
+start = time.time()
 
 if h * w > max_px:
 
@@ -23,7 +29,7 @@ img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 vertsData = []
 for j in range(h):
     for i in range(w):
-        vertsData.append([i - w/2, j - h/2, img[j,i]**.3])
+        vertsData.append([i - w/2, j - h/2, img[j,i]**.3 ]) 
 
 facesData = []
 
@@ -41,7 +47,7 @@ get_faces()
 bpy.ops.object.delete(use_global=False)
 mesh = bpy.data.meshes.new("myMesh_mesh")
 mesh.from_pydata(vertsData, [], facesData)
-mesh.update()
+# mesh.update()
 
 new_object = bpy.data.objects.new("myMesh_object", mesh)
 new_object.data = mesh
@@ -54,7 +60,7 @@ bpy.ops.object.mode_set(mode='EDIT')
 bpy.ops.mesh.select_mode( type  = 'FACE'   )
 bpy.ops.mesh.select_all( action = 'SELECT' )
 
-bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value":(0, 0, 8)}) 
+bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value":(0, 0, extrude_amt)}) 
 bpy.ops.transform.resize(value=(1, 1, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
 bpy.ops.object.mode_set( mode = 'OBJECT' )
@@ -78,11 +84,9 @@ bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
 # bpy.context.object.modifiers["SimpleDeform"].angle = 6.28319
 # bpy.ops.transform.rotate(value=3.14159, orient_axis='Z', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
-scale = 0.15
 bpy.ops.transform.resize(value=(scale, scale, scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 bpy.ops.transform.rotate(value= -90*deg_rad, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
-# bpy.ops.object.select_all( action = 'DESELECT' )
-# bpy.data.meshes["myMesh_mesh"].select_set(True)
-
 bpy.ops.export_mesh.stl(filepath = path + '\\myfile.stl')
+
+print(time.time() - start)
