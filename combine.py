@@ -5,16 +5,16 @@ import math
 import os
 import time
 
-# img = cv2.imread('Q:\\print_a_pic\\images\\arches.jpg')
-img = cv2.imread('C:\\Users\\thespahrtan\\Desktop\\utah\\IMG_20200316_123744.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\tree.jpg')
+# img = cv2.imread('C:\\Users\\thespahrtan\\Desktop\\utah\\IMG_20200316_123744.jpg')
 h, w, _ = img.shape
 path = os.path.dirname(os.path.abspath(__file__))
 
-max_px = 200000 # 200,000 standard - too high?
+max_px = 150000 # 200,000 standard - too high?
 scale = 0.15
 extrude_amt = 9
 thick_mod = 50
-mode = 'not cylinder' 
+mode = 'cylinder' 
 
 start = time.time()
 
@@ -65,13 +65,14 @@ bpy.ops.mesh.select_all( action = 'SELECT' )
 bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value":(0, 0, extrude_amt)}) 
 bpy.ops.transform.resize(value=(1, 1, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
+deg_rad = 3.141592554 / 180
+
 bpy.ops.object.mode_set( mode = 'OBJECT' )
 bpy.ops.object.empty_add(type='PLAIN_AXES', location=(0, 0, 0))
 
-deg_rad = 3.141592554 / 180
-
 bpy.ops.transform.rotate(value= 180 * deg_rad, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 bpy.ops.transform.rotate(value= 90 * deg_rad, orient_axis='Y', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+# bpy.ops.transform.rotate(value= 180 * deg_rad, orient_axis='Z', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
 bpy.data.objects["myMesh_object"].select_set(True)
 bpy.context.view_layer.objects.active = bpy.data.objects["myMesh_object"]
@@ -84,7 +85,7 @@ bpy.context.object.modifiers["SimpleDeform"].deform_axis = 'Y'
 
 if mode == 'cylinder':
     bpy.context.object.modifiers["SimpleDeform"].angle = 6.28319
-    bpy.ops.transform.rotate(value=3.14159, orient_axis='Z', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+    # bpy.ops.transform.rotate(value=3.14159, orient_axis='Z', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
 bpy.ops.transform.resize(value=(scale, scale, scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 bpy.ops.transform.rotate(value= -90*deg_rad, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
