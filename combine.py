@@ -5,7 +5,7 @@ import math
 import os
 import time
 
-img = cv2.imread('Q:\\print_a_pic\\images\\tree.jpg')
+img = cv2.imread('Q:\\print_a_pic\\images\\firespirit.jpg')
 # img = cv2.imread('C:\\Users\\thespahrtan\\Desktop\\utah\\IMG_20200316_123744.jpg')
 h, w, _ = img.shape
 path = os.path.dirname(os.path.abspath(__file__))
@@ -14,7 +14,7 @@ max_px = 150000 # 200,000 standard - too high?
 scale = 0.15
 extrude_amt = 9
 thick_mod = 50
-mode = 'cylinder' 
+mode = '   cylinder' 
 
 start = time.time()
 
