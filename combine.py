@@ -10,11 +10,14 @@ img = cv2.imread('Q:\\print_a_pic\\images\\firespirit.jpg')
 h, w, _ = img.shape
 path = os.path.dirname(os.path.abspath(__file__))
 
-max_px = 150000 # 200,000 standard - too high?
+max_kpx = 150
+max_px = max_kpx * 1000
 scale = 0.15
-extrude_amt = 9
-thick_mod = 50
+extrude_amt = 7
 mode = '   cylinder' 
+
+# prev 150 kpx, .15 scale, 9 extr
+# next 150, .2, 7 <- super bad
 
 start = time.time()
 
