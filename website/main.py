@@ -8,14 +8,22 @@ app = Flask(__name__)
 @app.route("/", methods=['POST', 'GET'])
 def home():
 
-    # os.system("blender --background --python " + path + "\\printapic.py")
-    # with open(path + "\\settings.json") as f:
-    #     config = json.load(f)
-    # return f"completed in {config['time']} seconds"
-
     if request.method == 'POST':
         filename = request.form['content']
-        return filename
+
+        with open(path + "\\settings.json", 'r+') as f:
+            config = json.load(f)
+            config['image'] = filename
+            f.seek(0)
+            json.dump(config, f)
+
+        os.system("blender --background --python " + path + "\\printapic.py")
+    
+        with open(path + "\\settings.json") as f:
+            config = json.load(f)
+
+        return f"finished processing {config['image']} in {config['time']} seconds"
+
     else:
         return render_template('index.html')
 
