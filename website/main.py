@@ -16,6 +16,7 @@ def home():
             config['image'] = filename
             f.seek(0)
             json.dump(config, f)
+            f.truncate()
 
         os.system("blender --background --python " + path + "\\printapic.py")
     
