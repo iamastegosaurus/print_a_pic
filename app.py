@@ -5,7 +5,6 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 
 path = os.path.dirname(os.path.abspath(__file__))
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = path + '\\images'
