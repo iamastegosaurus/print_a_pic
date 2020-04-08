@@ -6,9 +6,11 @@ import os
 import time
 import json
 
-start = time.time()
-
-path = os.path.dirname(os.path.abspath(__file__))
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+print(path)
+# py is stored as subdirectory to blend file
+# Q:\print_a_pic\playground\untitled.blend\test.py
+# so we have to go up 3 directories to get to Q:\print_a_pic
 
 with open(path + "\\settings.json") as f:
     config = json.load(f)
@@ -91,15 +93,3 @@ if mode == 'panorama':
     bpy.context.object.modifiers["SimpleDeform"].angle = 6.28319
     # bpy.ops.transform.rotate(value=3.14159, orient_axis='Z', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
-bpy.ops.transform.resize(value=(scale, scale, scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
-bpy.ops.transform.rotate(value= -90*deg_rad, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
-
-name = os.path.splitext(image)[0]
-bpy.ops.export_mesh.stl(filepath = path + '\\results\\' + name + '.stl')
-
-completion_time = time.time() - start
-
-config['time'] = round(completion_time, 4)
-
-with open(path + "\\settings.json", 'w') as f:
-    json.dump(config, f)
