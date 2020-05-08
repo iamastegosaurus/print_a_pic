@@ -2,6 +2,9 @@ import bpy
 print(bpy.app.version_string)
 print('asdf')
 
+# https://github.com/TylerGubala/blenderpy
+# https://github.com/TylerGubala/blenderpy/wiki#prerequisites-1
+
 
 # C:\Users\benbe>pip install bpy
 # Collecting bpy
