@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request
 import os
 from werkzeug.utils import secure_filename
 import cv2
@@ -7,7 +7,6 @@ import numpy as np
 import math
 
 path = os.path.dirname(os.path.abspath(__file__))
-print(path)
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = path + '\\images'
 
@@ -49,13 +48,25 @@ def printapic(filename):
 
     get_faces()
 
-    bpy.ops.object.delete(use_global=False)
+    for ob in bpy.data.objects:
+        print(ob.name)
+
+    bpy.data.objects["Cube"].select_set(True)
+    bpy.context.view_layer.objects.active = bpy.data.objects["Cube"]
+    bpy.ops.object.delete(use_global=False) 
+
+    for ob in bpy.data.objects:
+        print(ob.name)
+
     mesh = bpy.data.meshes.new("myMesh_mesh")
     mesh.from_pydata(vertsData, [], facesData)
 
     new_object = bpy.data.objects.new("myMesh_object", mesh)
     new_object.data = mesh
-    bpy.context.collection.objects.link(new_object) # 2.8
+    bpy.context.collection.objects.link(new_object)
+
+    for ob in bpy.data.objects:
+        print(ob.name)
 
     bpy.data.objects["myMesh_object"].select_set(True)
     bpy.context.view_layer.objects.active = bpy.data.objects["myMesh_object"]
@@ -90,32 +101,33 @@ def printapic(filename):
     bpy.ops.transform.resize(value=(scale, scale, scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
     bpy.ops.transform.rotate(value= -90*deg_rad, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
-    name = os.path.splitext(image)[0]
+    name = os.path.splitext(filename)[0]
     bpy.ops.export_mesh.stl(filepath = path + '\\results\\' + name + '.stl')
 
     return "neat"
 
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    if request.method == 'POST':
-        file = request.files['file']
-        filename = secure_filename(file.filename)
-        extension = os.path.splitext(filename)[1]
-        if len(filename) > 13:
-            filename = filename[0:10] + extension
-        if file:
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return printapic(filename)
-        else:
-            return render_template('index.html')
-    return render_template('index.html')
+# @app.route('/', methods=['GET', 'POST'])
+# def home():
+#     if request.method == 'POST':
+#         file = request.files['file']
+#         filename = secure_filename(file.filename)
+#         extension = os.path.splitext(filename)[1]
+#         if len(filename) > 13:
+#             filename = filename[0:10] + extension
+#         if file:
+#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#             printapic(filename)
+#             return "neat"
+#         else:
+#             return render_template('index.html')
+#     return render_template('index.html')
 
-if __name__ == "__main__":
-    app.secret_key = 'super secret key'
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.secret_key = 'super secret key'
+#     app.run(debug=True)
 
-
+print(printapic("spoderman.jpg"))
 
 # os.system("blender --background --python " + path + "\\printapic.py")
 # blender --background --python rebuild.py
