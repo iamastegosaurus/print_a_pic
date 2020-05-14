@@ -1,7 +1,10 @@
+import os
+os.environ["KIVY_NO_CONSOLELOG"] = "warning"
+import kivy
+
 from kivy.app import App
 from kivy.uix.camera import Camera
 from kivy.uix.widget import Widget
-from kivy.uix.slider import Slider
 from kivy.uix.scatter import Scatter
 from kivy.animation import Animation
 from kivy.graphics import Color, Rectangle
@@ -23,13 +26,11 @@ class Puzzle(Camera):
         self.build()
 
     def build(self):
-        self.clear_widgets()
         texture = self.texture
-        if not texture:
-            return
         bs = self.blocksize
         tw, th = self.texture_size
         # print(tw, th)
+        print(int(tw / bs), int(th / bs))
         for x in range(int(tw / bs)):
             for y in range(int(th / bs)):
                 bx = x * bs
@@ -47,7 +48,7 @@ class Puzzle(Camera):
         texture = self.texture
         bs = self.blocksize
         tw, th = self.texture_size
-        count = int(tw / bs) * int(th / bs)
+        count = int(tw / bs) * int(th / bs) #- 1
         indices = list(range(count))
         childindex = 0
         while indices:
@@ -72,8 +73,7 @@ class PuzzleApp(App):
     def build(self):
 
         root = Widget()
-        # Window.size = (1000, 600)
-        puzzle = Puzzle(resolution=(1000, 600), play=True)
+        puzzle = Puzzle(resolution=(1200, 800), play=True)
         root.add_widget(puzzle)
         return root
 
