@@ -19,7 +19,7 @@ func main() {
 
 	// downsize if too large (or always downsize?)
 	// func Resize(src Mat, dst *Mat, sz image.Point, fx, fy float64, interp InterpolationFlags)
-	Resize(img, img2, 0, 0.5, 0.5 float64, "INTER_AREA ")
+	gocv.Resize(img, img, img.Size(), 0.5, 0.5, "INTER_AREA")
 
 	fmt.Println(a)
 
