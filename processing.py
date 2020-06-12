@@ -10,15 +10,11 @@ def printapic(filename):
 
     max_kpx = 150
     scale = 0.15
-    extrude_amt = 8.5
+    extrude_amt = 8
 
-    
-
-    img = cv2.imread(path + "\\" + filename)
+    img = cv2.imread(path + "\\images\\" + filename)
     h, w, _ = img.shape
     max_px = max_kpx * 1000
-
-    print(w, h)
 
     if h * w > max_px:
 
@@ -30,12 +26,10 @@ def printapic(filename):
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    print(w, h)
-
     vertsData = []
     for j in range(h):
         for i in range(w):
-            vertsData.append([i - w/2, j - h/2, img[j,i] / 36]) # **.3
+            vertsData.append([i - w/2, j - h/2, img[j,i] ** .3]) 
 
     facesData = []
 
@@ -89,4 +83,6 @@ def printapic(filename):
     bpy.ops.transform.rotate(value= -90*deg_rad, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
 
     name = os.path.splitext(filename)[0]
-    bpy.ops.export_mesh.stl(filepath = path + '\\' + name + '.stl')
+    bpy.ops.export_mesh.stl(filepath = path + '\\results\\' + name + '.stl')
+
+printapic('sitting.jpg')
