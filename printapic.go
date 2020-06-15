@@ -9,6 +9,7 @@ import (
 	"gocv.io/x/gocv"
 )
 
+
 func getIMG(filename string) (gocv.Mat, int, int) {
 
 	var maxPX float64 = 200000
@@ -34,9 +35,10 @@ func getIMG(filename string) (gocv.Mat, int, int) {
 
 func main() {
 
+	name := "sitting"
 	path, _ := os.Getwd()
-	readFile := path + "\\images\\" + "sun.jpg"
-	writeFile := path + "\\results\\" + "sun.obj"
+	readFile := path + "\\images\\" + name + ".jpg"
+	writeFile := path + "\\results\\" + name + ".obj"
 
 	var img gocv.Mat
 	var w, h int
@@ -53,7 +55,7 @@ func main() {
 			// get type of gocv.Mat - CV8U -> GetUCharAt
 			// fmt.Println(img.Type())
 			k = img.GetUCharAt(j, i)
-			v = math.Sqrt(float64(k))
+			v = math.Sqrt(float64(k) / 2)
 			io.WriteString(f, fmt.Sprintf("v %d %d %.3f\n", i, j, v))
 		}
 	}
@@ -70,14 +72,5 @@ func main() {
 		}
 	}
 
-
-	//to show 'img' if necessary
-	// window := gocv.NewWindow("Hello")
-	// for {
-	// 	window.IMShow(img)
-	// 	if window.WaitKey(1) >= 0 {
-	// 		break
-	// 	}
-	// }
 
 }
