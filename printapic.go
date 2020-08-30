@@ -12,7 +12,7 @@ import (
 
 func getIMG(filename string) (gocv.Mat) {
 
-	var maxPX float64 = 200000
+	var maxPX float64 = 300000
 
 	img := gocv.IMRead(filename, gocv.IMReadGrayScale)
 	var w int = img.Size()[1]
@@ -33,9 +33,9 @@ func getIMG(filename string) (gocv.Mat) {
 
 func main() {
 
-	name := "sun"
+	name := "dnd"
 	path, _ := os.Getwd()
-	readFile := path + "\\images\\" + name + ".jpg"
+	readFile := path + "\\images\\" + name + ".png"
 	writeFile := path + "\\results\\" + name + ".obj"
 
 	var img gocv.Mat = getIMG(readFile)
@@ -66,18 +66,18 @@ func main() {
 				defer io.WriteString(f, fmt.Sprintf("f %d %d %d\n", a, b, c))
 				defer io.WriteString(f, fmt.Sprintf("f %d %d %d\n", c, d, a))
 
-				if j == 0 { // connect top edges
-					defer io.WriteString(f, fmt.Sprintf("f %d %d %d %d\n", b, a, w*h+1, w*h+2))
-				}
-				if j == w-2 { // bottom edges
-					defer io.WriteString(f, fmt.Sprintf("f %d %d %d %d\n", c, d, w*h+3, w*h+4))
-				}
-				if i == 0 { // left edges
-					defer io.WriteString(f, fmt.Sprintf("f %d %d %d %d\n", a, d, w*h+4, w*h+1))
-				}
-				if i == h-2 { //right edges
-					defer io.WriteString(f, fmt.Sprintf("f %d %d %d %d\n", c, b, w*h+2, w*h+3))
-				}
+				// if j == 0 { // connect top edges
+				// 	defer io.WriteString(f, fmt.Sprintf("f %d %d %d %d\n", b, a, w*h+1, w*h+2))
+				// }
+				// if j == w-2 { // bottom edges
+				// 	defer io.WriteString(f, fmt.Sprintf("f %d %d %d %d\n", c, d, w*h+3, w*h+4))
+				// }
+				// if i == 0 { // left edges
+				// 	defer io.WriteString(f, fmt.Sprintf("f %d %d %d %d\n", a, d, w*h+4, w*h+1))
+				// }
+				// if i == h-2 { //right edges
+				// 	defer io.WriteString(f, fmt.Sprintf("f %d %d %d %d\n", c, b, w*h+2, w*h+3))
+				// }
 
 			}
 		}
